@@ -47,6 +47,11 @@ if (protocol) location = opts.path;
 else if (pathParse(opts.path).root) location = 'file://' + opts.path;
 else location = 'file://' + path.join(process.cwd(), opts.path);
 
+process.on('unhandledRejection', function(reason, _promise) {
+  console.log( "Internal error: ", reason );
+  process.exit(1);
+});
+
 include({
   url: location
 }).then(function(template) {
